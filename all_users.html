@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="result-header">
+    <div>
+        <p class="eyebrow">ADMIN DASHBOARD</p>
+        <h1>All FitBuddy users</h1>
+        <p>Review stored user profiles and compare original and updated plans.</p>
+    </div>
+    <a class="secondary-button" href="/">Home</a>
+</section>
+
+{% if users %}
+<div class="admin-list">
+    {% for user in users %}
+    <article class="admin-card">
+        <div class="admin-heading">
+            <div>
+                <h2>{{ user.username }}</h2>
+                <p>{{ user.user_id }} · {{ user.goal }} · {{ user.intensity }}</p>
+            </div>
+            <span>{{ user.age }} years · {{ user.weight }} kg</span>
+        </div>
+
+        <div class="admin-plans">
+            <div>
+                <h3>Original plan</h3>
+                <pre>{{ user.original_plan }}</pre>
+            </div>
+            <div>
+                <h3>Updated plan</h3>
+                <pre>{{ user.updated_plan or "No feedback update yet." }}</pre>
+            </div>
+        </div>
+    </article>
+    {% endfor %}
+</div>
+{% else %}
+<section class="empty-state">
+    <h2>No users yet</h2>
+    <p>Generate a plan from the home page and it will appear here.</p>
+</section>
+{% endif %}
+{% endblock %}

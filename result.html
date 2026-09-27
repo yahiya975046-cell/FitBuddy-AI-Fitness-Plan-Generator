@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="result-header">
+    <div>
+        <p class="eyebrow">{% if updated %}UPDATED PLAN{% else %}YOUR PLAN{% endif %}</p>
+        <h1>{{ workout.title }}</h1>
+        <p>{{ workout.overview }}</p>
+    </div>
+    {% if updated %}
+    <div class="success-badge">✓ Plan updated</div>
+    {% endif %}
+</section>
+
+<section class="profile-grid">
+    <div class="profile-item"><span>Name</span><strong>{{ user.username }}</strong></div>
+    <div class="profile-item"><span>User ID</span><strong>{{ user.user_id }}</strong></div>
+    <div class="profile-item"><span>Age</span><strong>{{ user.age }}</strong></div>
+    <div class="profile-item"><span>Weight</span><strong>{{ user.weight }} kg</strong></div>
+    <div class="profile-item"><span>Goal</span><strong>{{ user.goal }}</strong></div>
+    <div class="profile-item"><span>Intensity</span><strong>{{ user.intensity }}</strong></div>
+</section>
+
+<section class="days">
+    {% for day in workout.days %}
+    <article class="day-card">
+        <div class="day-top">
+            <span class="day-number">{{ "%02d"|format(loop.index) }}</span>
+            <div>
+                <h2>{{ day.day }}</h2>
+                <p>{{ day.focus }}</p>
+            </div>
+        </div>
+
+        <div class="warmup">
+            <strong>Warm-up</strong>
+            <p>{{ day.warm_up }}</p>
+        </div>
+
+        <div class="exercise-list">
+            {% for exercise in day.exercises %}
+            <div class="exercise">
+                <div>
+                    <strong>{{ exercise.name }}</strong>
+                    <span>{{ exercise.reps_or_duration }}</span>
+                </div>
+                <div class="exercise-meta">
+                    <span>{{ exercise.sets }}</span>
+                    <span>{{ exercise.rest }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="cooldown">
+            <strong>Cooldown / Recovery</strong>
+            <p>{{ day.cool_down }}</p>
+        </div>
+    </article>
+    {% endfor %}
+</section>
+
+<section class="tip-card">
+    <p class="eyebrow">RECOVERY TIP</p>
+    <h2>{{ nutrition_tip.tip }}</h2>
+    <p>{{ nutrition_tip.recovery_note }}</p>
+</section>
+
+<section class="card feedback-card">
+    <p class="eyebrow">REFINE YOUR PLAN</p>
+    <h2>What would you change?</h2>
+    <p>Tell FitBuddy what you want adjusted. The original plan remains stored for comparison.</p>
+
+    <form method="post" action="/submit-feedback">
+        <input type="hidden" name="user_id" value="{{ user.user_id }}">
+        <textarea name="feedback" required maxlength="1000" placeholder="Example: make one day more focused on mobility and keep another day as recovery."></textarea>
+        <button class="primary-button" type="submit">Update My Plan →</button>
+    </form>
+</section>
+
+<section class="action-row">
+    <a class="secondary-button" href="/">Create another plan</a>
+    <a class="secondary-button" href="/docs">Open API docs</a>
+</section>
+{% endblock %}

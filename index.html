@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block content %}
+<section class="hero">
+    <div>
+        <p class="eyebrow">AI-POWERED WELLNESS</p>
+        <h1>Your 7-day fitness plan, generated with Gemini.</h1>
+        <p class="hero-copy">
+            Enter a few basic details and FitBuddy creates a structured weekly
+            routine plus a practical nutrition or recovery tip.
+        </p>
+    </div>
+    <div class="hero-card">
+        <span>01</span>
+        <strong>Tell us about you</strong>
+        <small>Goal + intensity + basic profile</small>
+    </div>
+</section>
+
+<section class="card form-card">
+    <div class="section-heading">
+        <div>
+            <p class="eyebrow">GET STARTED</p>
+            <h2>Build your plan</h2>
+        </div>
+        <span class="status-dot">Gemini backend integration</span>
+    </div>
+
+    <form method="post" action="/generate-workout" id="plan-form">
+        <div class="grid two">
+            <label>
+                Name
+                <input name="username" required maxlength="120" placeholder="Your name">
+            </label>
+
+            <label>
+                User ID
+                <input name="user_id" required maxlength="80" placeholder="student-001">
+            </label>
+
+            <label>
+                Age
+                <input name="age" type="number" min="13" max="100" required placeholder="20">
+            </label>
+
+            <label>
+                Weight (kg)
+                <input name="weight" type="number" min="20" max="500" step="0.1" required placeholder="65">
+            </label>
+
+            <label>
+                Fitness goal
+                <select name="goal" required>
+                    <option value="general wellness">General wellness</option>
+                    <option value="weight loss">Weight loss</option>
+                    <option value="muscle gain">Muscle gain</option>
+                    <option value="flexibility">Flexibility</option>
+                    <option value="endurance">Endurance</option>
+                </select>
+            </label>
+
+            <label>
+                Workout intensity
+                <select name="intensity" required>
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </label>
+        </div>
+
+        <div class="notice">
+            <strong>Wellness note:</strong>
+            Choose an intensity that feels manageable. Stop if an exercise causes pain
+            and seek appropriate professional guidance when needed.
+        </div>
+
+        <button class="primary-button" type="submit">
+            <span>Generate 7-Day Plan</span>
+            <span>→</span>
+        </button>
+    </form>
+</section>
+
+<section class="feature-grid">
+    <article class="feature">
+        <span>01</span>
+        <h3>Personalized</h3>
+        <p>Goal and intensity are included in the AI request.</p>
+    </article>
+    <article class="feature">
+        <span>02</span>
+        <h3>Structured</h3>
+        <p>Every generated plan is validated against a 7-day schema.</p>
+    </article>
+    <article class="feature">
+        <span>03</span>
+        <h3>Adaptive</h3>
+        <p>Feedback can regenerate an updated version of the plan.</p>
+    </article>
+</section>
+{% endblock %}
